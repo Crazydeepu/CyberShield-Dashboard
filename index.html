@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CYBERSHIELD-DT | Automotive Cybersecurity Digital Twin</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="icon" href="data:,">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="app-header">
+  <div class="header-left">
+    <div class="brand-mark">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2L4 5v6c0 5.2 3.4 9.8 8 11 4.6-1.2 8-5.8 8-11V5l-8-3z" stroke="var(--cyan)" stroke-width="1.6" fill="rgba(0,217,255,0.08)"/>
+        <path d="M9 12l2 2 4-4" stroke="var(--cyan)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <h1>CYBERSHIELD-DT</h1>
+      <p>Automotive Cybersecurity Digital Twin</p>
+    </div>
+  </div>
+
+  <div class="header-center" id="connectionIndicators">
+    <div class="conn-pill" id="conn-carla">
+      <span class="dot dot-green"></span> CARLA Connected
+    </div>
+    <div class="conn-pill" id="conn-api">
+      <span class="dot dot-blue"></span> API Online
+    </div>
+    <div class="conn-pill" id="conn-db">
+      <span class="dot dot-purple"></span> Database Connected
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div class="datetime" id="headerDateTime">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div>
+        <div class="dt-date" id="dtDate">--</div>
+        <div class="dt-time" id="dtTime">--</div>
+      </div>
+    </div>
+    <button class="icon-btn" aria-label="Notifications">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.7 21a2 2 0 01-3.4 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="badge">2</span>
+    </button>
+    <div class="avatar">AR</div>
+  </div>
+</header>
+
+<div class="app-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <nav class="nav-list">
+      <button class="nav-item active" data-page="overview">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M3 11l9-7 9 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        Overview
+      </button>
+      <button class="nav-item" data-page="telemetry">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M3 17l5-6 4 4 5-8 4 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Live Telemetry
+      </button>
+      <button class="nav-item" data-page="security">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M12 2l8 3v6c0 5.2-3.4 9.8-8 11-4.6-1.2-8-5.8-8-11V5l8-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        Security &amp; Attacks
+      </button>
+      <button class="nav-item" data-page="experiments">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M9 2v6L4 20a1.5 1.5 0 001.4 2h13.2a1.5 1.5 0 001.4-2L15 8V2" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 2h6M7 14h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        Experiments
+      </button>
+      <button class="nav-item" data-page="analytics">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M4 20V10M11 20V4M18 20v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Analytics
+      </button>
+      <button class="nav-item" data-page="history">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none"><path d="M3 12a9 9 0 109-9 9 9 0 00-7.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 4v4h4M12 7v5l4 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        History
+      </button>
+    </nav>
+
+    <div class="sidebar-vehicle">
+      <div class="sv-title">Vehicle</div>
+      <div class="sv-name">Tesla Model 3<br><span>(CARLA)</span></div>
+      <div class="sv-status" id="sidebarVehicleStatus"><span class="dot dot-green"></span> ONLINE</div>
+      <div class="sv-meta">
+        <div><span>World</span><b id="sv-world">Town03</b></div>
+        <div><span>Weather</span><b id="sv-weather">Clear</b></div>
+        <div><span>Autopilot</span><b id="sv-autopilot">Manual</b></div>
+        <div><span>Simulation</span><b id="sv-sim">Running</b></div>
+      </div>
+      <div class="sv-car-img" aria-hidden="true">
+        <svg viewBox="0 0 200 90" width="100%" height="auto">
+          <ellipse cx="100" cy="78" rx="80" ry="6" fill="rgba(0,217,255,0.08)"/>
+          <path d="M20 55 Q30 30 60 28 L130 28 Q160 30 175 55 L175 65 Q175 70 168 70 L20 70 Q14 70 14 65 Z" fill="rgba(230,235,245,0.08)" stroke="var(--cyan)" stroke-width="1"/>
+          <path d="M55 30 Q65 15 100 15 Q130 15 140 30" fill="none" stroke="var(--cyan)" stroke-width="1"/>
+          <circle cx="50" cy="70" r="12" fill="#0a0e17" stroke="var(--cyan)" stroke-width="1.5"/>
+          <circle cx="150" cy="70" r="12" fill="#0a0e17" stroke="var(--cyan)" stroke-width="1.5"/>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="main-content">
+
+    <div id="globalBanner" class="global-banner hidden"></div>
+
+    <!-- ===================== OVERVIEW PAGE ===================== -->
+    <section class="page active" id="page-overview">
+
+      <div class="status-grid" id="statusCards">
+        <!-- Filled dynamically by dashboard.js -->
+      </div>
+
+      <div class="overview-grid">
+
+        <div class="card telemetry-card">
+          <div class="card-head">
+            <h2><span class="icon-dot cyan"></span>Live Telemetry</h2>
+            <div class="head-right">
+              <span class="live-tag"><span class="dot dot-cyan pulse"></span>Real-time</span>
+              <div class="tab-group" id="telemetryTabs">
+                <button class="tab-btn active" data-metric="speed">Speed</button>
+                <button class="tab-btn" data-metric="throttle">Throttle</button>
+                <button class="tab-btn" data-metric="steering">Steering</button>
+                <button class="tab-btn" data-metric="acceleration">Acceleration</button>
+              </div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="overviewTelemetryChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card twin-card">
+          <div class="card-head"><h2><span class="icon-dot purple"></span>Vehicle State (Digital Twin)</h2></div>
+          <div class="twin-body">
+            <div class="twin-stat"><span>Speed</span><b id="twinSpeed">--</b></div>
+            <div class="twin-stat"><span>Throttle (Applied)</span><b id="twinThrottle">--</b><div class="mini-bar"><i id="twinThrottleBar"></i></div></div>
+            <div class="twin-visual">
+              <svg viewBox="0 0 260 140" width="100%">
+                <ellipse cx="130" cy="120" rx="105" ry="10" fill="rgba(0,217,255,0.06)"/>
+                <path d="M30 85 Q45 48 90 44 L175 44 Q215 48 235 85 L235 100 Q235 107 226 107 L30 107 Q22 107 22 100 Z" fill="rgba(230,235,245,0.06)" stroke="var(--cyan)" stroke-width="1.2"/>
+                <path d="M78 46 Q95 22 130 22 Q168 22 182 46" fill="none" stroke="var(--cyan)" stroke-width="1.2"/>
+                <circle cx="70" cy="107" r="17" fill="#0a0e17" stroke="var(--cyan)" stroke-width="2"/>
+                <circle cx="190" cy="107" r="17" fill="#0a0e17" stroke="var(--cyan)" stroke-width="2"/>
+                <circle cx="130" cy="70" r="3" fill="var(--cyan)" class="pulse-dot"/>
+              </svg>
+              <p class="twin-note">Digital twin placeholder &mdash; CARLA video stream integration point</p>
+            </div>
+            <div class="twin-stat"><span>Steering (Applied)</span><b id="twinSteering">--</b><div class="mini-bar purple"><i id="twinSteeringBar"></i></div></div>
+            <div class="twin-stat"><span>Brake (Applied)</span><b id="twinBrake">--</b><div class="mini-bar red"><i id="twinBrakeBar"></i></div></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="overview-grid-3">
+
+        <div class="card">
+          <div class="card-head">
+            <h2><span class="icon-dot purple"></span>Security Metrics (Real-time)</h2>
+            <span class="live-tag"><span class="dot dot-purple pulse"></span>Live Detection</span>
+          </div>
+          <div class="metrics-grid" id="securityMetrics">
+            <!-- filled dynamically -->
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2><span class="icon-dot cyan"></span>Latest Experiment Summary</h2>
+            <span class="exp-id-tag" id="latestExpId">--</span>
+          </div>
+          <table class="kv-table" id="latestExperimentTable">
+            <!-- filled dynamically -->
+          </table>
+        </div>
+
+        <div class="card alert-card" id="alertCard">
+          <div class="card-head"><h2><span class="icon-dot green"></span>Active Alert</h2></div>
+          <div class="alert-body" id="alertBody">
+            <!-- filled dynamically -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== LIVE TELEMETRY PAGE ===================== -->
+    <section class="page" id="page-telemetry">
+      <div class="page-header"><h1>Live Telemetry</h1><p>Real-time vehicle dynamics from the CARLA simulation feed</p></div>
+
+      <div class="status-grid status-grid-5" id="telemetryStatCards"></div>
+
+      <div class="chart-grid-2">
+        <div class="card">
+          <div class="card-head"><h2>Speed vs Time</h2></div>
+          <div class="chart-wrap"><canvas id="chartSpeed"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Acceleration vs Time</h2></div>
+          <div class="chart-wrap"><canvas id="chartAcceleration"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Requested vs Applied Throttle</h2></div>
+          <div class="chart-wrap"><canvas id="chartThrottle"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Requested vs Applied Steering</h2></div>
+          <div class="chart-wrap"><canvas id="chartSteering"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SECURITY & ATTACKS PAGE ===================== -->
+    <section class="page" id="page-security">
+      <div class="page-header"><h1>Security &amp; Attacks</h1><p>Command integrity monitoring and cyberattack detection</p></div>
+
+      <div class="status-grid" id="securityStatCards"></div>
+
+      <div class="overview-grid-3">
+        <div class="card">
+          <div class="card-head"><h2>Command Integrity &mdash; Steering</h2></div>
+          <table class="kv-table" id="commandIntegrityTable"></table>
+        </div>
+        <div class="card" style="grid-column: span 2;">
+          <div class="card-head"><h2>Requested vs Applied Command</h2></div>
+          <div class="chart-wrap"><canvas id="chartCommandIntegrity"></canvas></div>
+        </div>
+      </div>
+
+      <div class="card alert-card" id="securityAlertCard">
+        <div class="card-head"><h2>Anomaly Detection</h2></div>
+        <div class="alert-body" id="securityAlertBody"></div>
+      </div>
+    </section>
+
+    <!-- ===================== EXPERIMENTS PAGE ===================== -->
+    <section class="page" id="page-experiments">
+      <div class="page-header"><h1>Experiments</h1><p>Simulation runs retrieved from the experiment database</p></div>
+      <div class="experiments-grid" id="experimentsGrid"></div>
+    </section>
+
+    <!-- ===================== ANALYTICS PAGE ===================== -->
+    <section class="page" id="page-analytics">
+      <div class="page-header"><h1>Analytics</h1><p>Aggregate statistics across all recorded experiments</p></div>
+
+      <div class="status-grid" id="analyticsStatCards"></div>
+
+      <div class="chart-grid-2">
+        <div class="card">
+          <div class="card-head"><h2>Normal vs Attack &mdash; Speed</h2></div>
+          <div class="chart-wrap"><canvas id="chartAnalyticsSpeed"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Normal vs Attack &mdash; Acceleration</h2></div>
+          <div class="chart-wrap"><canvas id="chartAnalyticsAccel"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Experiments by Attack Type</h2></div>
+          <div class="chart-wrap"><canvas id="chartAttackTypes"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Max Command Difference by Experiment</h2></div>
+          <div class="chart-wrap"><canvas id="chartCommandDiff"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HISTORY PAGE ===================== -->
+    <section class="page" id="page-history">
+      <div class="page-header"><h1>History</h1><p>Full experiment log</p></div>
+      <div class="card">
+        <table class="history-table" id="historyTable">
+          <thead>
+            <tr><th>ID</th><th>Type</th><th>Duration</th><th>Samples</th><th>Max Speed</th><th>Risk Level</th></tr>
+          </thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="js/mockData.js"></script>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/telemetry.js"></script>
+<script src="js/security.js"></script>
+<script src="js/experiments.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
